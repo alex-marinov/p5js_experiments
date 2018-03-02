@@ -1,0 +1,35 @@
+<p> TEST </p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
+<p> p5.js test script goes here: </p>
+
+    <script type="text/javascript">
+        var x, y;
+        function setup() {
+            var cnv = createCanvas(640, 480);
+			cnv.parent('myContainer');
+            // Starts in the middle
+            x = width / 2;
+            y = height;
+        }
+
+        function draw() {
+            background(200);
+
+            // Draw a circle
+            stroke(50);
+            fill(100);
+            ellipse(x, y, 24, 24);
+
+            // Jiggling randomly on the horizontal axis
+            x = x + random(-10, 10);
+            // Moving up at a constant speed
+            y = y - 1;
+
+            // Reset to the bottom
+            if (y < 0) {
+                y = height;
+            }
+        }
+    </script>
+<div id="myContainer"></div>
+</p>
