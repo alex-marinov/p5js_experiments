@@ -1,35 +1,81 @@
 <p> TEST </p>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
 <p> p5.js test script goes here: </p>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
     <script type="text/javascript">
         var x, y;
+        var c; //background color
+
+        var xspacing = 20;    // Distance between each horizontal location
+        var w;                // Width of entire wave
+        var theta = 0.0;      // Start angle at 0
+        var amplitude = 10.0; // Height of wave
+        var period = 500.0;   // How many pixels before the wave repeats
+        var dx;               // Value for incrementing x
+        var yvalues;
+
         function setup() {
-            var cnv = createCanvas(640, 480);
-			cnv.parent('myContainer');
+            var cnv = createCanvas(640, 100);
+
+            w = width + 20;
+            dx = (TWO_PI / period) * xspacing;
+
+            yvalues = new Array(floor(w/xspacing));
+
+			      cnv.parent('myContainer');
             // Starts in the middle
             x = width / 2;
-            y = height;
+            y = (height / 2) + 30 ;
+            c = color(255,255,255); //default color
         }
 
         function draw() {
-            background(200);
+            background(c);
 
-            // Draw a circle
-            stroke(50);
-            fill(100);
-            ellipse(x, y, 24, 24);
+            //background(244, 248, 252);
+            //line(mouseX, 0, mouseX, 100);
+            //line(0, mouseY, 640, mouseY);
+            //ellipse(mouseX,mouseY,4);
 
-            // Jiggling randomly on the horizontal axis
-            x = x + random(-10, 10);
-            // Moving up at a constant speed
-            y = y - 1;
+            textSize(25);
+            textStyle(BOLD);
+            textAlign(CENTER);
+            text('Welcome to Advanced Concept Engineering space', 320, 60);
 
-            // Reset to the bottom
-            if (y < 0) {
-                y = height;
-            }
+            calcWave();
+            renderWave();
+
         }
+
+        function mousePressed(){
+          c = color(random(160,240), random(160,240), random(160,240));
+        }
+
+
+        function calcWave() {
+          // Increment theta (try different values for
+          // 'angular velocity' here)
+          theta += 0.03;
+
+          // For every x value, calculate a y value with sine function
+          var x = theta;
+          for (var i = 0; i < yvalues.length; i++) {
+            yvalues[i] = sin(x)*amplitude;
+            x+=dx;
+          }
+        }
+
+        function renderWave() {
+          noStroke();
+          fill(0);
+          // A simple way to draw the wave with an ellipse at each location
+          for (var x = 0; x < yvalues.length; x++) {
+            ellipse(x*xspacing, y+yvalues[x], 5, 5);
+            //textSize(15);
+            //text('+', x*xspacing, y+yvalues[x]);
+          }
+        }
+
+
     </script>
 <div id="myContainer"></div>
 </p>
